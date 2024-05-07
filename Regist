@@ -1,72 +1,66 @@
 import os
 
-def read_csv(file):
+def read_csv(file_name): 
     data = []
-    if file == "user":
-        file_path = 'user.csv'
-    elif file == "monster":
-        file_path = 'monster.csv'
-    
+    file_path = f"{file_name}.csv" 
+
     if os.path.exists(file_path):
         with open(file_path, 'r') as csvfile:
-            # Read line by line
             for line in csvfile:
-                # Initialize variables for current field and current entry
-                field = ''
+                # Remove leading/trailing whitespace (optional)
+                line = line.strip()
                 entry = []
-                # Iterate over each character in the line
+                field = ''
                 for char in line:
-                    # If the character is not a comma, add it to the current field
                     if char != ',':
                         field += char
-                    # If the character is a comma, add the current field to the current entry
                     else:
                         entry.append(field)
                         field = ''
-                # Add the last field to the current entry
-                entry.append(field)
-                # Add the completed entry to the data list
+                entry.append(field) 
                 data.append(entry)
     return data
 
-def check_valid(user):
+def check_valid(username): 
     acceptable_chars = set('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-')
-    validation = set(user)
+    return all(char in acceptable_chars for char in username)  # One-line check
 
-    return validation.issubset(acceptable_chars)
+def register():
+    username = input("Masukkan Username: ")
+    password = input("Masukkan Password: ")
 
-def regist():
-  user = input("Masukkan Username: ")
-  pwd = input("Masukkan Password: ")
-  if not check_valid(user):
-    print("Username tidak valid, hanya mengandung huruf, angka, _, dan -")
-    return
+    if not check_valid(username):
+        print("Username tidak valid, hanya mengandung huruf, angka, _, dan -")
+        return
 
-  users_data = read_csv("user")
-  for entry in users_data:
-    i = 0
-    found = False
-    while i < len(entry):
-     if entry[i] == ";" :
-        for j in range(i + 1, i + len(user) + 1) :
-            if j >= len(entry) or entry[j] != user [j - i - 1]:
-                break  # Mismatch found, exit inner loop
-            else:
-                found = True  # Word matched after semicolon
-                break  # Exit outer loop if word found
-        i += 1
+    users_data = read_csv("user")
+    for entry in users_data:
+        if entry[0] == username:  # Cek username
+            print("Username sudah terdaftar. Silakan gunakan username lain.")
+            return
 
-    if found:
-      print("Username sudah terdaftar. Silakan gunakan username lain.")
-      return
+    
+    user_id = len(users_data)
+    coins = 0  # Use plural form for consistency
 
-  # Unique username found, proceed with registration logic
-  id = len(users_data)
-  coin = 0
+    with open('user.csv', 'a') as f:
+        f.write(f"{user_id};{username};{password};agent;{coins}\n")
 
-  with open('user.csv', 'a') as f:
-    f.write(f"{id};{user};{pwd};agent;{coin}\n")
-  
-  print("Registrasi berhasil.")
+    print("Registrasi berhasil.")
+    print("Silakan pilih salah satu monster sebagai monster awalmu.")
+    print("1. Charizard")
+    print("2. Bulbasaur")
+    print("3. Aspal")
 
-regist()
+    monster_choice = input("\n Monster pilihanmu: ")
+    if monster_choice == "1":
+        monster = "Charizard"
+    elif monster_choice == "2":
+        monster = "Bulbasaur"
+    elif monster_choice == "3":
+        monster = "Aspal"
+    else:
+        monster = "Tidak ada"
+    print(f"\nSelamat datang Agent {username}. Mari kita mengalahkan Dr. Asep Spakbor dengan {monster}!")
+
+register()
