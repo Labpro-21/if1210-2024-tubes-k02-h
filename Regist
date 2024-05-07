@@ -1,0 +1,72 @@
+import os
+
+def read_csv(file):
+    data = []
+    if file == "user":
+        file_path = 'user.csv'
+    elif file == "monster":
+        file_path = 'monster.csv'
+    
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as csvfile:
+            # Read line by line
+            for line in csvfile:
+                # Initialize variables for current field and current entry
+                field = ''
+                entry = []
+                # Iterate over each character in the line
+                for char in line:
+                    # If the character is not a comma, add it to the current field
+                    if char != ',':
+                        field += char
+                    # If the character is a comma, add the current field to the current entry
+                    else:
+                        entry.append(field)
+                        field = ''
+                # Add the last field to the current entry
+                entry.append(field)
+                # Add the completed entry to the data list
+                data.append(entry)
+    return data
+
+def check_valid(user):
+    acceptable_chars = set('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-')
+    validation = set(user)
+
+    return validation.issubset(acceptable_chars)
+
+def regist():
+  user = input("Masukkan Username: ")
+  pwd = input("Masukkan Password: ")
+  if not check_valid(user):
+    print("Username tidak valid, hanya mengandung huruf, angka, _, dan -")
+    return
+
+  users_data = read_csv("user")
+  for entry in users_data:
+    i = 0
+    found = False
+    while i < len(entry):
+     if entry[i] == ";" :
+        for j in range(i + 1, i + len(user) + 1) :
+            if j >= len(entry) or entry[j] != user [j - i - 1]:
+                break  # Mismatch found, exit inner loop
+            else:
+                found = True  # Word matched after semicolon
+                break  # Exit outer loop if word found
+        i += 1
+
+    if found:
+      print("Username sudah terdaftar. Silakan gunakan username lain.")
+      return
+
+  # Unique username found, proceed with registration logic
+  id = len(users_data)
+  coin = 0
+
+  with open('user.csv', 'a') as f:
+    f.write(f"{id};{user};{pwd};agent;{coin}\n")
+  
+  print("Registrasi berhasil.")
+
+regist()
