@@ -31,6 +31,3 @@ def save(list_user, list_monster, list_item_inventory, list_monster_inventory, l
     listtocsv(list_monster_shop, (path + '/monster_shop.csv'))
 
     print(f"Berhasil menyimpan data di folder {path}")
-
-a = [['a', 'b'], [1, 2]]
-save(a, a, a, a, a, a)
