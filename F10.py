@@ -169,6 +169,7 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
 
 # Asumsi username sudah ada (user sudah login)
 
+# from src.F10 import shop
 # login_id = int(input())
 # if login_id:
 #     list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop = shop(login_id,list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop)
