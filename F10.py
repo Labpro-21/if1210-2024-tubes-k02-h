@@ -1,5 +1,5 @@
 
-def shop(username):
+def shop(login_id):
     # Akses list dari variabel global
     global list_user
     global list_monster
@@ -73,7 +73,7 @@ def shop(username):
                 display_shop_items(monster_shop_details)
 
         elif action == "beli":
-            user_id = str(username)
+            user_id = str(login_id)
             print(f"Username Anda: {user_id}")
 
             print(">>> Mau beli apa? (potion/monster):")
@@ -167,8 +167,8 @@ list_item_shop = [['type', 'stock', 'price'], ['power', '5', '100']]
 list_monster_shop = [['monster_id', 'stock', 'price'], ['67890', '5', '700'], ['11111', '5', '500']]
 
 # Asumsi username sudah ada (user sudah login)
-username = int(input())
-if username:
-    shop(username)
+login_id = int(input())
+if login_id:
+    shop(login_id)
 else:
     print("Anda belum login. Silakan login dahulu.")
