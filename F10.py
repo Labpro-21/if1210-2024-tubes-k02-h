@@ -1,14 +1,5 @@
-
-def shop(login_id):
-    # Akses list dari variabel global
-    global list_user
-    global list_monster
-    global list_item_inventory
-    global list_monster_inventory
-    global list_item_shop
-    global list_monster_shop
-
-    # Konversi List of List ke List of Dict untuk kemudahan modifikasi data
+def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop):
+    # Konversi 'List of List' ke 'List of Dict' untuk pemrosesan data
     headers = list_user[0]
     data = []
     for i in range(len(list_user)):
@@ -83,6 +74,9 @@ def shop(login_id):
                 display_shop_items([f"{idx+1}. {potion['type']} (Stok: {potion['stock']}, Harga: {potion['price']} koin)" for idx, potion in enumerate(potion_shop)])
                 print(">>> Pilih nomor urut potion yang ingin dibeli:")
                 selected_potion_idx = int(input()) - 1
+                if selected_potion_idx > len(potion_shop) - 1:
+                    print("Pilihan tidak valid, silakan masukkan nomor pilihan yang tersedia")
+                    continue
                 quantity = int(input("Masukkan banyaknya potion yang ingin dibeli: "))
                 selected_potion = potion_shop[selected_potion_idx]
                 if int(selected_potion['stock']) > 0 and int(selected_potion['stock']) - quantity >= 0:
@@ -112,6 +106,9 @@ def shop(login_id):
                 display_shop_items([f"{idx+1}. {monster['monster_id']} (Stok: {monster['stock']}, Harga: {monster['price']} koin)" for idx, monster in enumerate(monster_shop)])
                 print(">>> Pilih nomor urut monster yang ingin dibeli:")
                 selected_monster_idx = int(input()) - 1
+                if selected_monster_idx > len(monster_shop) - 1:
+                    print("Pilihan tidak valid, silakan masukkan nomor pilihan yang tersedia")
+                    continue
                 selected_monster = monster_shop[selected_monster_idx]
                 existing_monster = [m for m in monster_inventory if m['user_id'] == user_id and m['monster_id'] == selected_monster['monster_id']]
                 if int(selected_monster['stock']) > 0:
@@ -157,18 +154,23 @@ def shop(login_id):
             headers = list(monster_shop[0].keys())
             list_monster_shop = [headers] + [[d[key] for key in headers] for d in monster_shop]
             break
+    return list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop
+
+# APLIKASI FUNGSI shop() PADA main.py
 
 # Asumsi list sudah diload dari CSV sebelumnya 
-list_user = [['id', 'username', 'password', 'role', 'oc'], ['12345', 'abc', 'koolabis', 'agent', '1500'], ['32432', 'aasd', 'rgerwfa', 'agent', '1500']]
-list_monster = [['id', 'type', 'atk_power', 'def_power', 'hp'], ['67890', 'pokemon', '200', '250', '500'], ['11111', 'pikachu', '245', '235', '245']]
-list_item_inventory = [['user_id', 'type', 'quantity'], ['12345', 'power', '1']]
-list_monster_inventory = [['user_id', 'monster_id', 'level'], ['12345', '67890', '1']]
-list_item_shop = [['type', 'stock', 'price'], ['power', '5', '100']]
-list_monster_shop = [['monster_id', 'stock', 'price'], ['67890', '5', '700'], ['11111', '5', '500']]
+
+# list_user = [['id', 'username', 'password', 'role', 'oc'], ['12345', 'abc', 'koolabis', 'agent', '1500'], ['32432', 'aasd', 'rgerwfa', 'agent', '1500']]
+# list_monster = [['id', 'type', 'atk_power', 'def_power', 'hp'], ['67890', 'pokemon', '200', '250', '500'], ['11111', 'pikachu', '245', '235', '245']]
+# list_item_inventory = [['user_id', 'type', 'quantity'], ['12345', 'power', '1']]
+# list_monster_inventory = [['user_id', 'monster_id', 'level'], ['12345', '67890', '1']]
+# list_item_shop = [['type', 'stock', 'price'], ['power', '5', '100']]
+# list_monster_shop = [['monster_id', 'stock', 'price'], ['67890', '5', '700'], ['11111', '5', '500']]
 
 # Asumsi username sudah ada (user sudah login)
-login_id = int(input())
-if login_id:
-    shop(login_id)
-else:
-    print("Anda belum login. Silakan login dahulu.")
+
+# login_id = int(input())
+# if login_id:
+#     list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop = shop(login_id,list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop)
+# else:
+#     print("Anda belum login. Silakan login dahulu.")
