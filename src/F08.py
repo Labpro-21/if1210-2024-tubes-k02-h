@@ -1,5 +1,16 @@
+def custom_zip(*args):
+    iterators = [iter(iterable) for iterable in args]
+    sentinel = object()
+    
+    while True:
+        result = tuple(next(iterator, sentinel) for iterator in iterators)
+        if any(val is sentinel for val in result):
+            return
+        yield result
+
 
 def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inventory):
+
     from time import sleep
     from src.F00 import random_num
     from src.F05 import adjust
@@ -11,7 +22,7 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
     for i in range(len(list_user)):
         if i > 0:
             data.append(list_user[i])
-    user_data = [dict(zip(headers, row)) for row in data]
+    user_data = [dict(custom_zip(headers, row)) for row in data]
     
     user_login = [u for u in user_data if u['id'] == str(login_id)]
     if user_login:
@@ -29,21 +40,21 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
     for i in range(len(list_monster)):
         if i > 0:
             data.append(list_monster[i])
-    monster_data = [dict(zip(headers, row)) for row in data]
+    monster_data = [dict(custom_zip(headers, row)) for row in data]
     
     headers = list_item_inventory[0]
     data = []
     for i in range(len(list_item_inventory)):
         if i > 0:
             data.append(list_item_inventory[i])
-    potion_inventory = [dict(zip(headers, row)) for row in data]
+    potion_inventory = [dict(custom_zip(headers, row)) for row in data]
 
     headers = list_monster_inventory[0]
     data = []
     for i in range(len(list_monster_inventory)):
         if i > 0:
             data.append(list_monster_inventory[i])
-    monster_inventory = [dict(zip(headers, row)) for row in data]
+    monster_inventory = [dict(custom_zip(headers, row)) for row in data]
     opponent_idx = random_num(0,len(monster_data)-1)
     opponent_monster = monster_data[opponent_idx]
     opponent_monster['level'] = str(random_num(1, 5))
