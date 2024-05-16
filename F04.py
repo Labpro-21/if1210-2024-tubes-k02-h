@@ -1,4 +1,4 @@
-def help(username):
+def help(login_id):
     global list_user # Mengambil list user dari variabel global
     headers = list_user[0]
     data = []
@@ -6,7 +6,7 @@ def help(username):
         data.append(list_user[i])
 
     user_data = [dict(zip(headers, row)) for row in data] # Konversi ke list of dict
-    user_data = [u for u in user_data if u['id'] == str(username)] # Filter username yang terlogin
+    user_data = [u for u in user_data if u['id'] == str(login_id)] # Filter username yang terlogin
     
     if not user_data: # Jika belum login
         print("Kamu belum login sebagai role apapun. Silahkan login terlebih dahulu.\n")
