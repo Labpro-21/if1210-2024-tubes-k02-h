@@ -7,6 +7,13 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
             data.append(list_user[i])
     user_data = [dict(zip(headers, row)) for row in data]
     
+    user_login = [u for u in user_data if u['id'] == str(login_id)]
+    user_login = user_login[0]
+    role = str(user_login['role']).lower()
+    if role != 'agent':
+        print("Yah, hanya agent saja yang boleh masuk Shop and Currency.")
+        return list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop
+    
     headers = list_monster[0]
     data = []
     for i in range(len(list_monster)):
@@ -160,7 +167,7 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
 
 # Asumsi list sudah diload dari CSV sebelumnya 
 
-# list_user = [['id', 'username', 'password', 'role', 'oc'], ['12345', 'abc', 'koolabis', 'agent', '1500'], ['32432', 'aasd', 'rgerwfa', 'agent', '1500']]
+# list_user = [['id', 'username', 'password', 'role', 'oc'], ['12345', 'abc', 'koolabis', 'agent', '1500'], ['54321', 'def', 'rgerwfa', 'admin', '1500']]
 # list_monster = [['id', 'type', 'atk_power', 'def_power', 'hp'], ['67890', 'pokemon', '200', '250', '500'], ['11111', 'pikachu', '245', '235', '245']]
 # list_item_inventory = [['user_id', 'type', 'quantity'], ['12345', 'power', '1']]
 # list_monster_inventory = [['user_id', 'monster_id', 'level'], ['12345', '67890', '1']]
