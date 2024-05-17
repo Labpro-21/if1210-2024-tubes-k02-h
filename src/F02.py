@@ -6,9 +6,9 @@ with open('user.csv', mode ='r') as file_user:
 def login(data):
     username = input("Masukkan username: ")
     for i in range (1, len (data)):
-        if username == data [i][1]:
+        if username == data[i][1]:
             password = input("Masukkan password: ")
-            if password == data [i][2]:
+            if password == data[i][2]:
                 print(f"Selamat datang {data[i][3]} {data[i][1]}")
                 user_id = data[i][0]
                 return user_id
