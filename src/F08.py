@@ -8,6 +8,10 @@ def custom_zip(*args):
             return
         yield result
 
+def custom_isdigit(s):
+    if isinstance(s, int):
+        return True
+    return all('0' <= char <= '9' for char in str(s))
 
 def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inventory):
 
@@ -17,6 +21,11 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
     from src.F05 import attack
     from src.F06 import potion
     # Konversi List ke Dict
+    list_user = [[str(item) for item in row] for row in list_user]
+    list_monster = [[str(item) for item in row] for row in list_monster]
+    list_item_inventory = [[str(item) for item in row] for row in list_item_inventory]
+    list_monster_inventory = [[str(item) for item in row] for row in list_monster_inventory]
+
     headers = list_user[0]
     data = []
     for i in range(len(list_user)):
@@ -29,10 +38,18 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
         user_login = user_login[0]
     else:
         print("User_id tidak terdaftar!")
+        list_user = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_user]
+        list_monster = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster]
+        list_item_inventory = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_inventory]
+        list_monster_inventory  = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster_inventory]
         return list_user,list_monster,list_item_inventory,list_monster_inventory
     role = str(user_login['role']).lower()
     if role != 'agent':
         print("Yah, hanya agent saja yang boleh masuk Battle.")
+        list_user = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_user]
+        list_monster = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster]
+        list_item_inventory = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_inventory]
+        list_monster_inventory  = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster_inventory]
         return list_user,list_monster,list_item_inventory,list_monster_inventory
     
     headers = list_monster[0]
@@ -95,10 +112,10 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
     is_healing_used = False
     is_resilience_used = False
     user_quit = False
-    round = 0
+    ronde = 0
     while int(opponent_monster['hp']) > 0 and int(selected_user_monster['hp']) > 0:
         sleep(2)
-        print(f"\nRONDE {round + 1}")
+        print(f"\nRONDE {ronde + 1}")
         sleep(2)
         print("\nGiliran Anda menyerang monster lawan!")
         sleep(1)
@@ -159,7 +176,7 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
             if opponent_monster['hp'] <= 0:
                 break
             else:
-                round += 1
+                ronde += 1
     if not user_quit:
         if opponent_monster['hp'] <= 0:
             oc_coin = random_num(10, 100)
@@ -183,12 +200,25 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
             headers = list(monster_inventory[0].keys())
             list_monster_inventory = [headers] + [[d[key] for key in headers] for d in monster_inventory]
 
+            list_user = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_user]
+            list_monster = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster]
+            list_item_inventory = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_inventory]
+            list_monster_inventory  = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster_inventory]
+
             return list_user,list_monster,list_item_inventory,list_monster_inventory
         else:
             print("Yah, Anda dikalahkan monster lawan! Jangan menyerah, terus kembangkan monstermu!")
+            list_user = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_user]
+            list_monster = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster]
+            list_item_inventory = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_inventory]
+            list_monster_inventory  = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster_inventory]
             return list_user,list_monster,list_item_inventory,list_monster_inventory
     else:
         print("Anda berhasil kabur dari pertarungan!")
+        list_user = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_user]
+        list_monster = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster]
+        list_item_inventory = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_inventory]
+        list_monster_inventory  = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster_inventory]
         return list_user,list_monster,list_item_inventory,list_monster_inventory
     
 # Aplikasi pada main.py
@@ -206,6 +236,6 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
 # from src.F08 import *
 # login_id = str(input())
 # if login_id:
-#     list_user,list_monster,list_item_inventory,list_monster_inventory = battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inventory)
+#     li_user,li_monster,li_item_inventory,li_monster_inventory = battle(login_id,li_user,li_monster,li_item_inventory,li_monster_inventory)
 # else:
 #     print("Silakan login dahulu")
