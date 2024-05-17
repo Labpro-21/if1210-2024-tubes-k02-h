@@ -1,5 +1,4 @@
-def help(login_id):
-    global list_user # Mengambil list user dari variabel global
+def help(login_id,list_user):
     headers = list_user[0]
     data = []
     for i in range(1, len(list_user)):
@@ -43,3 +42,8 @@ def help(login_id):
         print("\nFootnote:")
         print("Untuk menggunakan aplikasi, silahkan masukkan nama fungsi yang terdaftar")
         print("Jangan lupa untuk memasukkan input yang valid")
+
+# Aplikasi fungsi help pada file main.py
+
+# from src.F04 import help
+# help(login_id,li_user)
