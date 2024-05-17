@@ -91,89 +91,129 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
 
     # Iterasi Shop and Currency oleh User
     while True:
-        print(">>> Pilih aksi (beli/lihat/keluar):")
+        print(">>> Selamat datang di Toko Mr. Yanto! Pilih aksi (beli/lihat/keluar):")
         action = input().lower()
 
         if action == "lihat":
-            print(">>> Mau lihat apa? (potion/monster):")
-            item_type = input().lower()
-            if item_type == "potion":
-                display_shop_items([f"{potion['type']} (Stok: {potion['stock']}, Harga: {potion['price']} koin)" for potion in potion_shop])
-            elif item_type == "monster":
-                monster_shop_details = []
-                for monster in monster_shop:
-                    monster_info = [m for m in monster_data if m['id'] == monster['monster_id']][0]
-                    monster_shop_details.append(f"{monster['monster_id']}. {monster_info['type']} (ATK: {monster_info['atk_power']}, DEF: {monster_info['def_power']}, HP: {monster_info['hp']}, Stok: {monster['stock']}, Harga: {monster['price']} koin)")
-                display_shop_items(monster_shop_details)
+            while True:
+                print(">>> Mau lihat apa? (potion/monster):")
+                item_type = input().lower()
+                if item_type == "potion":
+                    print("Potion yang tersedia: ")
+                    display_shop_items([f"{potion['type']} (Stok: {potion['stock']}, Harga: {potion['price']} koin)" for potion in potion_shop])
+                    break
+                elif item_type == "monster":
+                    print("Monster yang tersedia: ")
+                    monster_shop_details = []
+                    for monster in monster_shop:
+                        monster_info = [m for m in monster_data if m['id'] == monster['monster_id']][0]
+                        monster_shop_details.append(f"{monster['monster_id']}. {monster_info['type']} (ATK: {monster_info['atk_power']}, DEF: {monster_info['def_power']}, HP: {monster_info['hp']}, Stok: {monster['stock']}, Harga: {monster['price']} koin)")
+                    display_shop_items(monster_shop_details)
+                    break
+                else:
+                    continue
 
         elif action == "beli":
             user_id = str(login_id)
             print(f"Username Anda: {user_id}")
+            while True:
+                print(">>> Mau beli apa? (potion/monster):")
+                item_type = input().lower()
 
-            print(">>> Mau beli apa? (potion/monster):")
-            item_type = input().lower()
-
-            if item_type == "potion":
-                display_shop_items([f"{idx+1}. {potion['type']} (Stok: {potion['stock']}, Harga: {potion['price']} koin)" for idx, potion in enumerate(potion_shop)])
-                print(">>> Pilih nomor urut potion yang ingin dibeli:")
-                selected_potion_idx = int(input()) - 1
-                if selected_potion_idx > len(potion_shop) - 1:
-                    print("Pilihan tidak valid, silakan masukkan nomor pilihan yang tersedia")
-                    continue
-                quantity = int(input("Masukkan banyaknya potion yang ingin dibeli: "))
-                selected_potion = potion_shop[selected_potion_idx]
-                if int(selected_potion['stock']) > 0 and int(selected_potion['stock']) - quantity >= 0:
-                    for user in user_data:
-                        if user['id'] == user_id:
-                            user_coins = int(user['oc'])
-                            print(f"Jumlah koin Anda: {user['oc']}")
-                            if user_coins >= int(selected_potion['price']) * quantity:
-                                user_coins -= int(selected_potion['price']) * quantity
-                                selected_potion_name = selected_potion['type']
-                                user_potion = [p for p in potion_inventory if p['user_id'] == user_id and p['type'] == selected_potion_name]
-                                if user_potion:
-                                    user_potion[0]['quantity'] = str(int(user_potion[0]['quantity']) + quantity)
-                                else:
-                                    potion_inventory.append({'user_id': user_id, 'type': selected_potion_name, 'quantity': f'{quantity}'})
-                                selected_potion['stock'] = str(int(selected_potion['stock']) - quantity)
-                                user['oc'] = str(user_coins)
-                                print(f"Berhasil membeli {selected_potion_name}.")
-                            else:
-                                print("Koin Anda tidak mencukupi.")
-                            break
-
-                else:
-                    print("Stok potion habis atau tidak mencukupi.")
-
-            elif item_type == "monster":
-                display_shop_items([f"{idx+1}. {monster['monster_id']} (Stok: {monster['stock']}, Harga: {monster['price']} koin)" for idx, monster in enumerate(monster_shop)])
-                print(">>> Pilih nomor urut monster yang ingin dibeli:")
-                selected_monster_idx = int(input()) - 1
-                if selected_monster_idx > len(monster_shop) - 1:
-                    print("Pilihan tidak valid, silakan masukkan nomor pilihan yang tersedia")
-                    continue
-                selected_monster = monster_shop[selected_monster_idx]
-                existing_monster = [m for m in monster_inventory if m['user_id'] == user_id and m['monster_id'] == selected_monster['monster_id']]
-                if int(selected_monster['stock']) > 0:
-                    if existing_monster:
-                        print("Anda sudah memiliki monster ini.")
-                    else:
+                if item_type == "potion":
+                    while True:
                         for user in user_data:
                             if user['id'] == user_id:
                                 user_coins = int(user['oc'])
-                                print(f"Jumlah koin Anda: {user['oc']}")
-                                if int(selected_monster['price']) < user_coins:
-                                    user_coins -= int(selected_monster['price'])
-                                    monster_inventory.append({'user_id': user_id, 'monster_id': selected_monster['monster_id'], 'level': '1'})
-                                    selected_monster['stock'] = str(int(selected_monster['stock']) - 1)
-                                    user['oc'] = str(user_coins)
-                                    print("Berhasil membeli monster.")
-                                else:
-                                    print("Koin tidak mencukupi.")
-                                break
+                        print(f"Jumlah koin Anda: {user['oc']}")
+                        print("Potion yang dijual:")
+                        display_shop_items([f"{potion['type']} (Stok: {potion['stock']}, Harga: {potion['price']} koin)" for potion in potion_shop])
+    
+                        print(">>> Pilih nomor urut potion yang ingin dibeli:")
+                        idx = input()
+                        if not custom_isdigit(idx):
+                            print("Pilihan tidak valid. Silakan masukkan format yang benar.")
+                            continue
+                        selected_potion_idx = int(idx) - 1
+                        if selected_potion_idx > len(potion_shop) - 1:
+                            print("Pilihan tidak valid, silakan masukkan nomor pilihan yang tersedia")
+                            continue
+                        quantity = input("Masukkan banyaknya potion yang ingin dibeli: ")
+                        if not custom_isdigit(quantity):
+                            print("Pilihan tidak valid. Silakan masukkan format yang benar.")
+                            continue
+                        quantity = int(quantity)
+                        selected_potion = potion_shop[selected_potion_idx]
+                        if int(selected_potion['stock']) > 0 and int(selected_potion['stock']) - quantity >= 0:
+                            for user in user_data:
+                                if user['id'] == user_id:
+                                    user_coins = int(user['oc'])
+                                    if user_coins >= int(selected_potion['price']) * quantity:
+                                        user_coins -= int(selected_potion['price']) * quantity
+                                        selected_potion_name = selected_potion['type']
+                                        user_potion = [p for p in potion_inventory if p['user_id'] == user_id and p['type'] == selected_potion_name]
+                                        if user_potion:
+                                            user_potion[0]['quantity'] = str(int(user_potion[0]['quantity']) + quantity)
+                                        else:
+                                            potion_inventory.append({'user_id': user_id, 'type': selected_potion_name, 'quantity': f'{quantity}'})
+                                        selected_potion['stock'] = str(int(selected_potion['stock']) - quantity)
+                                        user['oc'] = str(user_coins)
+                                        print(f"Berhasil membeli {selected_potion_name}.")
+                                    else:
+                                        print("Koin Anda tidak mencukupi.")
+                                    break
+                            break
 
-            else:
-                print("Pilihan tidak valid. Silakan coba lagi.")
+                        else:
+                            print("Stok potion habis atau tidak mencukupi.")
+                            break
+                    break
+
+                elif item_type == "monster":
+                    for user in user_data:
+                        if user['id'] == user_id:
+                            user_coins = int(user['oc'])
+                    print(f"Jumlah koin Anda: {user['oc']}")
+                    print("Monster yang dijual:")
+                    monster_shop_details = []
+                    for monster in monster_shop:
+                        monster_info = [m for m in monster_data if m['id'] == monster['monster_id']][0]
+                        monster_shop_details.append(f"{monster['monster_id']}. {monster_info['type']} (ATK: {monster_info['atk_power']}, DEF: {monster_info['def_power']}, HP: {monster_info['hp']}, Stok: {monster['stock']}, Harga: {monster['price']} koin)")
+                    display_shop_items(monster_shop_details)
+                    while True:
+                        print(">>> Pilih nomor urut monster yang ingin dibeli:")
+                        idx = input()
+                        if not custom_isdigit(idx):
+                            print("Pilihan tidak valid. Silakan masukkan format yang benar.")
+                            continue
+                        selected_monster_idx = int(idx) - 1
+                        if selected_monster_idx > len(monster_shop) - 1:
+                            print("Pilihan tidak valid, silakan masukkan nomor pilihan yang tersedia")
+                            continue
+                        selected_monster = monster_shop[selected_monster_idx]
+                        existing_monster = [m for m in monster_inventory if m['user_id'] == user_id and m['monster_id'] == selected_monster['monster_id']]
+                        if int(selected_monster['stock']) > 0:
+                            if existing_monster:
+                                print("Anda sudah memiliki monster ini.")
+                            else:
+                                for user in user_data:
+                                    if user['id'] == user_id:
+                                        user_coins = int(user['oc'])
+                                        if int(selected_monster['price']) < user_coins:
+                                            user_coins -= int(selected_monster['price'])
+                                            monster_inventory.append({'user_id': user_id, 'monster_id': selected_monster['monster_id'], 'level': '1'})
+                                            selected_monster['stock'] = str(int(selected_monster['stock']) - 1)
+                                            user['oc'] = str(user_coins)
+                                            print("Berhasil membeli monster.")
+                                        else:
+                                            print("Koin tidak mencukupi.")
+                                        break
+                            break
+                    break
+
+                else:
+                    print("Pilihan tidak valid. Silakan coba lagi.")
+                    continue
 
         elif action == "keluar":
             print("Terima kasih telah berbelanja. Sampai jumpa lagi!")
@@ -197,6 +237,8 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
             headers = list(monster_shop[0].keys())
             list_monster_shop = [headers] + [[d[key] for key in headers] for d in monster_shop]
             break
+        else:
+            continue
     list_user = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_user]
     list_monster = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster]
     list_item_inventory = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_inventory]
