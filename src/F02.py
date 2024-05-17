@@ -10,7 +10,8 @@ def login(data):
             password = input("Masukkan password: ")
             if password == data [i][2]:
                 print(f"Selamat datang {data[i][3]} {data[i][1]}")
-                return username
+                user_id = data[i][0]
+                return user_id
             else:
                 print("Password salah")
         else:
