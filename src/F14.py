@@ -15,7 +15,8 @@ def load():
                         elmt += i
         for i in index_columnint: #mengubah kolom string menjadi int (sesuai tipe data kolom masing2)
             for j in range (1, len(li)):
-                li[j][i] = int(li[j][i])
+                if li[j][i].isdigit(): # Memastikan string yang berisi angka saja yang diubah menjadi int
+                    li[j][i] = int(li[j][i])
 
         return li
     
