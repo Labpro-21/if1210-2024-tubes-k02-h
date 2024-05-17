@@ -72,8 +72,17 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
         if i > 0:
             data.append(list_monster_inventory[i])
     monster_inventory = [dict(custom_zip(headers, row)) for row in data]
-    opponent_idx = random_num(0,len(monster_data)-1)
-    opponent_monster = monster_data[opponent_idx]
+
+    mns = []
+    for monster_inv in monster_inventory:
+        for monster_data_entry in monster_data:
+            if monster_inv['monster_id'] == monster_data_entry['id']:
+                monster = {**monster_data_entry, 'level': monster_inv['level']}  # Combining only the 'level' attribute
+                monster = adjust(monster)  # Adjust monster attributes based on level
+                mns.append(monster)
+    
+    opponent_idx = random_num(0,len(mns)-1)
+    opponent_monster = mns[opponent_idx]
     opponent_monster['level'] = str(random_num(1, 5))
     opponent_monster = adjust(opponent_monster)
     sleep(1)
@@ -83,7 +92,7 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
     print("DEF Power: ", opponent_monster['def_power'])
     print("HP: ", opponent_monster['hp'])
     print("Level: ", opponent_monster['level'])
-    sleep(2)
+    sleep(1)
 
     user_monsters = []
     for monster_inv in monster_inventory:
@@ -104,7 +113,7 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
     print("DEF Power: ", selected_user_monster['def_power'])
     print("HP: ", selected_user_monster['hp'])
     print("Level: ", selected_user_monster['level'])
-    sleep(2)
+    sleep(1)
 
 
 
@@ -114,9 +123,9 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
     user_quit = False
     ronde = 0
     while int(opponent_monster['hp']) > 0 and int(selected_user_monster['hp']) > 0:
-        sleep(2)
+        sleep(1)
         print(f"\nRONDE {ronde + 1}")
-        sleep(2)
+        sleep(1)
         print("\nGiliran Anda menyerang monster lawan!")
         sleep(1)
         action = input("Pilih aksi Anda - Attack, Potion, Quit: ")
@@ -130,7 +139,7 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
             print(f"DEF Power: {opponent_monster['def_power']}")
             print(f"HP: {opponent_monster['hp']}")
             print(f"Level: {opponent_monster['level']}")
-            sleep(2)
+            sleep(1)
             if opponent_monster['hp'] <= 0:
                 break
         elif action.lower() == 'potion':
@@ -172,7 +181,7 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
             print(f"def Power: {selected_user_monster['def_power']}")
             print(f"HP: {selected_user_monster['hp']}")
             print(f"Level: {selected_user_monster['level']}")
-            sleep(2)
+            sleep(1)
             if opponent_monster['hp'] <= 0:
                 break
             else:
@@ -184,9 +193,6 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
                 if user['id'] == login_id:
                     user['oc'] = str(int(user['oc']) + oc_coin)
             print(f"Selamat, Anda Menang! Anda memperoleh {oc_coin} OC coins!")
-            for monster_entry in monster_data:
-                if 'level' in monster_entry:
-                    del monster_entry['level']
             # Konversi balik ke List of List untuk menyimpan data
             headers = list(user_data[0].keys())
             list_user = [headers] + [[d[key] for key in headers] for d in user_data]
