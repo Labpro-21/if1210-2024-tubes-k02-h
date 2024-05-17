@@ -11,3 +11,8 @@ def exit_game(list_user, list_monster, list_item_inventory, list_monster_invento
             exit()
         else:
             continue
+            
+# Aplikasi fungsi exit_game pada file main.py
+            
+# from src.F16 import exit_game
+# exit_game(li_user, li_monster, li_item_inventory, li_monster_inventory, li_item_shop, li_monster_shop)
