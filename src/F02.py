@@ -10,8 +10,13 @@ def login(data):
             password = input("Masukkan password: ")
             if password == data [i][2]:
                 print(f"Selamat datang {data[i][3]} {data[i][1]}")
+                return username
             else:
                 print("Password salah")
         else:
             print("Username tidak terdaftar")
-login (user)                
+
+# Aplikasi pada main.py
+
+# from src.F02 import *
+# login_id = login(user) # login_id dipakai sebagai variabel global di main.py untuk menentukan kepemilikan item, akses fungsi tertentu, dan status login user          
