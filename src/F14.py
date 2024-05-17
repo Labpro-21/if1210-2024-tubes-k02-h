@@ -15,6 +15,9 @@ def load():
                         row, elmt = [], ''
                     else:
                         elmt += i
+            if elmt: # Include last row
+                row.append(elmt)
+                li.append(row)
         for i in index_columnint: #mengubah kolom string menjadi int (sesuai tipe data kolom masing2)
             for j in range (1, len(li)):
                 if custom_isdigit(li[j][i]): # Memastikan string yang berisi angka saja yang diubah menjadi int
