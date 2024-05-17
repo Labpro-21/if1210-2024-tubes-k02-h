@@ -1,4 +1,6 @@
 def load():
+    def custom_isdigit(s): # Implementasi fungsi isDigit
+        return all('0' <= char <= '9' for char in s)
     def csvtolist(csv_file, index_columnint): #index_columnint = index kolom yang bertipe data integer
         li, row, elmt = [], [], ''         
         with open(csv_file, 'r') as f:       
@@ -15,7 +17,7 @@ def load():
                         elmt += i
         for i in index_columnint: #mengubah kolom string menjadi int (sesuai tipe data kolom masing2)
             for j in range (1, len(li)):
-                if li[j][i].isdigit(): # Memastikan string yang berisi angka saja yang diubah menjadi int
+                if custom_isdigit(li[j][i]): # Memastikan string yang berisi angka saja yang diubah menjadi int
                     li[j][i] = int(li[j][i])
 
         return li
