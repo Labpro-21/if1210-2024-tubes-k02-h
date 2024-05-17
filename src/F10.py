@@ -8,7 +8,18 @@ def custom_zip(*args):
             return
         yield result
 
+def custom_isdigit(s):
+    if isinstance(s, int):
+        return True
+    return all('0' <= char <= '9' for char in str(s))
+
 def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop):
+    list_user = [[str(item) for item in row] for row in list_user]
+    list_monster = [[str(item) for item in row] for row in list_monster]
+    list_item_inventory = [[str(item) for item in row] for row in list_item_inventory]
+    list_monster_inventory = [[str(item) for item in row] for row in list_monster_inventory]
+    list_item_shop = [[str(item) for item in row] for row in list_item_shop]
+    list_monster_shop = [[str(item) for item in row] for row in list_monster_shop]
     # Konversi 'List of List' ke 'List of Dict' untuk pemrosesan data
     headers = list_user[0]
     data = []
@@ -18,10 +29,25 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
     user_data = [dict(custom_zip(headers, row)) for row in data]
     
     user_login = [u for u in user_data if u['id'] == str(login_id)]
+    if not user_login:
+        print("User_id tidak terdaftar!")
+        list_user = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_user]
+        list_monster = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster]
+        list_item_inventory = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_inventory]
+        list_monster_inventory  = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster_inventory]
+        list_item_shop = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_shop]
+        list_monster_shop  = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster_shop]
+        return list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop
     user_login = user_login[0]
     role = str(user_login['role']).lower()
     if role != 'agent':
         print("Yah, hanya agent saja yang boleh masuk Shop and Currency.")
+        list_user = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_user]
+        list_monster = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster]
+        list_item_inventory = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_inventory]
+        list_monster_inventory  = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster_inventory]
+        list_item_shop = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_shop]
+        list_monster_shop  = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster_shop]
         return list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop
     
     headers = list_monster[0]
@@ -171,6 +197,12 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
             headers = list(monster_shop[0].keys())
             list_monster_shop = [headers] + [[d[key] for key in headers] for d in monster_shop]
             break
+    list_user = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_user]
+    list_monster = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster]
+    list_item_inventory = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_inventory]
+    list_monster_inventory  = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster_inventory]
+    list_item_shop = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_shop]
+    list_monster_shop  = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster_shop]
     return list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop
 
 # APLIKASI FUNGSI shop() PADA main.py
@@ -189,6 +221,6 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
 # from src.F10 import shop
 # login_id = int(input())
 # if login_id:
-#     list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop = shop(login_id,list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop)
+#     li_user,li_monster,li_item_inventory,li_monster_inventory,li_item_shop,li_monster_shop = shop(login_id,li_user,li_monster,li_item_inventory,li_monster_inventory,li_item_shop,li_monster_shop)
 # else:
 #     print("Anda belum login. Silakan login dahulu.")
