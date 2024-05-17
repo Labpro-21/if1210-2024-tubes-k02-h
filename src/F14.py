@@ -33,11 +33,11 @@ def load():
             sys.exit()
         else: 
             print("\nLoading...\n")
-            li_user = csvtolist((path + '/user.csv'), [0, 4])                               
-            li_monster = csvtolist((path + '/monster.csv'), [0, 2, 3, 4])                 
-            li_item_inventory = csvtolist((path + '/item_inventory.csv'), [0, 2])                   
+            li_user = csvtolist((path + '/user.csv'), [0, 1, 2, 3, 4]) # Load semua header (id,username,password,role,oc)                          
+            li_monster = csvtolist((path + '/monster.csv'), [0, 1, 2, 3, 4]) # Load semua header (id,type,atk_power,def_power.hp)             
+            li_item_inventory = csvtolist((path + '/item_inventory.csv'), [0, 1, 2]) # Load semua header (user_id,type,quantity)                  
             li_monster_inventory = csvtolist((path + '/monster_inventory.csv'), [0, 1, 2])
-            li_item_shop = csvtolist((path + '/item_shop.csv'), [1, 2])
+            li_item_shop = csvtolist((path + '/item_shop.csv'), [0, 1, 2]) # load semua header (type,stock,price)
             li_monster_shop = csvtolist((path + '/monster_shop.csv'), [0, 1, 2])
             li_item = [['potion_id', 'type'], [1, 'strength'], [2, 'resilience'], [3, 'healing']]
             print("Selamat datang di program OWCA!")
