@@ -1,6 +1,8 @@
 def custom_zip(*args):
+    def zipper(**attr):
+        return attr
     iterators = [iter(iterable) for iterable in args]
-    sentinel = object()
+    sentinel = zipper()
     
     while True:
         result = tuple(next(iterator, sentinel) for iterator in iterators)
@@ -104,7 +106,7 @@ def arena(login_id,list_user,list_monster,list_item_inventory,list_monster_inven
     defends = 0
     user_quit = False
     ronde = 0
-    while stage <= 4:
+    while stage <= 4 and not user_quit:
         mns = []
         for monster_inv in monster_inventory:
             for monster_data_entry in monster_data:
@@ -181,7 +183,6 @@ def arena(login_id,list_user,list_monster,list_item_inventory,list_monster_inven
                 break
             else:
                 continue
-
             if not user_quit:        
                 print(f"Sekarang giliran monster {opponent_monster['type']} melawan monstermu! HYAH!")
                 opponent_monster,selected_user_monster,damage = attack_arena(opponent_monster, selected_user_monster)
