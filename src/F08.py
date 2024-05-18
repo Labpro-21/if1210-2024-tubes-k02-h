@@ -1,6 +1,8 @@
 def custom_zip(*args):
+    def zipper(**attr):
+        return attr
     iterators = [iter(iterable) for iterable in args]
-    sentinel = object()
+    sentinel = zipper()
     
     while True:
         result = tuple(next(iterator, sentinel) for iterator in iterators)
