@@ -6,9 +6,8 @@ def monster_management(list_monster):
 
     headers = list_monster[0]
     data = []
-    for i in range(len(list_monster)):
-        if i > 0:
-            data.append(list_monster[i])
+    for i in range(1,len(list_monster)):
+        data.append(list_monster[i])
     monster_data = [dict(custom_zip(headers, row)) for row in data]
 
     while True:
