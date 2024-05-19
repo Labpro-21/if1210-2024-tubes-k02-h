@@ -72,7 +72,7 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
 
     # Iterasi Shop and Currency oleh User
     while True:
-        print(">>> Selamat datang di Toko Mr. Yanto! Pilih aksi (beli/lihat/keluar):")
+        print("\n>>> Selamat datang di Toko Mr. Yanto! Pilih aksi (beli/lihat/keluar):")
         action = input().lower()
 
         if action == "lihat":
@@ -80,11 +80,11 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
                 print(">>> Mau lihat apa? (potion/monster):")
                 item_type = input().lower()
                 if item_type == "potion":
-                    print("Potion yang tersedia: ")
+                    print("\nPotion yang tersedia: ")
                     display_shop_items([f"{potion['type']} (Stok: {potion['stock']}, Harga: {potion['price']} koin)" for potion in potion_shop])
                     break
                 elif item_type == "monster":
-                    print("Monster yang tersedia: ")
+                    print("\nMonster yang tersedia: ")
                     monster_shop_details = []
                     for monster in monster_shop:
                         monster_info = [m for m in monster_data if m['id'] == monster['monster_id']][0]
@@ -107,7 +107,7 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
                             if user['id'] == user_id:
                                 user_coins = int(user['oc'])
                         print(f"Jumlah koin Anda: {user['oc']}")
-                        print("Potion yang dijual:")
+                        print("\nPotion yang dijual:")
                         display_shop_items([f"{potion['type']} (Stok: {potion['stock']}, Harga: {potion['price']} koin)" for potion in potion_shop])
     
                         print(">>> Pilih nomor urut potion yang ingin dibeli:")
@@ -139,14 +139,14 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
                                             potion_inventory.append({'user_id': user_id, 'type': selected_potion_name, 'quantity': f'{quantity}'})
                                         selected_potion['stock'] = str(int(selected_potion['stock']) - quantity)
                                         user['oc'] = str(user_coins)
-                                        print(f"Berhasil membeli {selected_potion_name}.")
+                                        print(f"\nBerhasil membeli {selected_potion_name}.")
                                     else:
-                                        print("Koin Anda tidak mencukupi.")
+                                        print("\nKoin Anda tidak mencukupi.")
                                     break
                             break
 
                         else:
-                            print("Stok potion habis atau tidak mencukupi.")
+                            print("\nStok potion habis atau tidak mencukupi.")
                             break
                     break
 
@@ -155,7 +155,7 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
                         if user['id'] == user_id:
                             user_coins = int(user['oc'])
                     print(f"Jumlah koin Anda: {user['oc']}")
-                    print("Monster yang dijual:")
+                    print("\nMonster yang dijual:")
                     monster_shop_details = []
                     for monster in monster_shop:
                         monster_info = [m for m in monster_data if m['id'] == monster['monster_id']][0]
@@ -185,15 +185,15 @@ def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_invent
                                             monster_inventory.append({'user_id': user_id, 'monster_id': selected_monster['monster_id'], 'level': '1'})
                                             selected_monster['stock'] = str(int(selected_monster['stock']) - 1)
                                             user['oc'] = str(user_coins)
-                                            print("Berhasil membeli monster.")
+                                            print("\nBerhasil membeli monster.")
                                         else:
-                                            print("Koin tidak mencukupi.")
+                                            print("\nKoin tidak mencukupi.")
                                         break
                             break
                     break
 
                 else:
-                    print("Pilihan tidak valid. Silakan coba lagi.")
+                    print("\nPilihan tidak valid. Silakan coba lagi.")
                     continue
 
         elif action == "keluar":
