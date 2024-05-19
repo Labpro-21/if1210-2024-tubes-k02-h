@@ -484,10 +484,10 @@ def shop_management(li_monster, li_item, li_monster_shop, li_item_shop): #yang b
             exit = True
     return li_monster, li_monster_shop, li_item_shop
 
-li_monster = [['id', 'type', 'atk_power', 'def_power', 'hp'], [1, 'Pikachow', 11, 111, 1111], [2, 'Bulbu', 22, 222, 2222], [3, 'Zeze', 33, 333, 3333], [4, 'Iqbal', 44, 444, 4444]]
-li_monster_shop = [['monster_id', 'stock', 'price'], [1, 10, 100], [2, 20, 200], [3, 30, 300]]
-li_item_shop = [["type", 'stock', 'price'], ['strength', 10, 50], ['resilience', 5, 30]]
-li_item = [['potion_id', 'type'], [1, 'strength'], [2, 'resilience'], [3, 'healing']]
+# li_monster = [['id', 'type', 'atk_power', 'def_power', 'hp'], [1, 'Pikachow', 11, 111, 1111], [2, 'Bulbu', 22, 222, 2222], [3, 'Zeze', 33, 333, 3333], [4, 'Iqbal', 44, 444, 4444]]
+# li_monster_shop = [['monster_id', 'stock', 'price'], [1, 10, 100], [2, 20, 200], [3, 30, 300]]
+# li_item_shop = [["type", 'stock', 'price'], ['strength', 10, 50], ['resilience', 5, 30]]
+# li_item = [['potion_id', 'type'], [1, 'strength'], [2, 'resilience'], [3, 'healing']]
 
-li_monster, li_monster_shop, li_item_shop = shop_management(li_monster, li_item, li_monster_shop, li_item_shop)
-print(li_monster, '\n', li_item, '\n', li_monster_shop, '\n', li_item_shop)
+# li_monster, li_monster_shop, li_item_shop = shop_management(li_monster, li_item, li_monster_shop, li_item_shop)
+# print(li_monster, '\n', li_item, '\n', li_monster_shop, '\n', li_item_shop)
