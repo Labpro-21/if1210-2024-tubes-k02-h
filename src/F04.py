@@ -1,13 +1,16 @@
 def help(login_id,list_user):
+    from src.F05 import custom_zip
+    list_user = [[str(item) for item in row] for row in list_user]
+
     headers = list_user[0]
     data = []
-    for i in range(1, len(list_user)):
-        data.append(list_user[i])
-
-    user_data = [dict(zip(headers, row)) for row in data] # Konversi ke list of dict
+    for i in range(len(list_user)):
+        if i > 0:
+            data.append(list_user[i])
+    user_data = [dict(custom_zip(headers, row)) for row in data]
     user_data = [u for u in user_data if u['id'] == str(login_id)] # Filter username yang terlogin
     
-    if not user_data: # Jika belum login
+    if not login_id: # Jika belum login
         print("Kamu belum login sebagai role apapun. Silahkan login terlebih dahulu.\n")
         print("Login: Masuk ke dalam akun yang sudah terdaftar\n")
         print("Register: Membuat akun baru\n")
