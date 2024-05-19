@@ -2,6 +2,7 @@ from src.F01 import register
 from src.F02 import login
 from src.F03 import logout
 from src.F04 import help
+from src.F05 import custom_zip
 from src.F07 import inventory
 from src.F08 import battle
 from src.F09 import arena
@@ -37,9 +38,39 @@ while True:
   elif a == 'lab':
     li_user,li_monster_inventory = laboratory(login_id,li_user,li_monster,li_monster_inventory)
   elif a == 'shop_mgmt':
-    li_monster, li_monster_shop, li_item_shop = shop_management(li_monster, li_item, li_monster_shop, li_item_shop)
+    headers = li_user[0]
+    data = []
+    for i in range(1,len(li_user)):
+      data.append(li_user[i])
+    user_data = [dict(custom_zip(headers, row)) for row in data]
+    if login_id:
+      user_login = [u for u in user_data if u['id'] == int(login_id)]
+      if user_login:
+          user_login = user_login[0]
+          role = str(user_login['role']).lower()
+          if role != 'admin':
+            print("Yah, hanya admin saja yang boleh masuk Shop Management.")
+          else:
+            li_monster, li_monster_shop, li_item_shop = shop_management(li_monster, li_item, li_monster_shop, li_item_shop)
+    else:
+        print("Anda belum login!")
   elif a =='monster_mgmt':
-    li_monster = monster_management(li_monster)
+    headers = li_user[0]
+    data = []
+    for i in range(1,len(li_user)):
+      data.append(li_user[i])
+    user_data = [dict(custom_zip(headers, row)) for row in data]
+    if login_id:
+      user_login = [u for u in user_data if u['id'] == int(login_id)]
+      if user_login:
+          user_login = user_login[0]
+          role = str(user_login['role']).lower()
+          if role != 'admin':
+            print("Yah, hanya admin saja yang boleh masuk Monster Management.")
+          else:
+            li_monster = monster_management(li_monster)
+    else:
+        print("Anda belum login!")
   elif a == 'save':
     save(li_user, li_monster, li_item_inventory, li_monster_inventory, li_item_shop, li_monster_shop)
   elif a == 'quit' or a == 'exit':
