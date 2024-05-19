@@ -62,7 +62,7 @@ def inventory(login_id,list_user,list_monster,list_item_inventory,list_monster_i
         if item_type == "potion":
             print("Potion yang tersedia: ")
             potion_info = [f"Nama: {potion['type']}, Jumlah: {potion['quantity']}" for potion in potion_inventory if potion['user_id'] == str(login_id)]
-            if potion_info[0]:
+            if potion_info:
                 display_shop_items(potion_info)
             else:
                 print("Anda tidak mempunyai potion apapun di inventory")
