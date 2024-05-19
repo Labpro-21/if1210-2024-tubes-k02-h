@@ -14,7 +14,12 @@ def save(li_user, li_monster, li_item_inventory, li_monster_inventory, li_item_s
             f.write(line)
 
     parentsave = 'data'
-    path = parentsave + '/' + str(input("Masukkan nama folder: "))
+    folder = input("Masukkan nama folder: ")
+    while len(folder) == 0:
+        print('Input tidak valid')
+        print()
+        folder = input("Masukkan nama folder: ")
+    path = parentsave + '/' + folder
 
     print("\nSaving...\n")
 
