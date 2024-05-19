@@ -11,9 +11,8 @@ def inventory(login_id,list_user,list_monster,list_item_inventory,list_monster_i
 
     headers = list_user[0]
     data = []
-    for i in range(len(list_user)):
-        if i > 0:
-            data.append(list_user[i])
+    for i in range(1,len(list_user)):
+        data.append(list_user[i])
     user_data = [dict(custom_zip(headers, row)) for row in data]
     
     user_login = [u for u in user_data if u['id'] == str(login_id)]
@@ -37,23 +36,20 @@ def inventory(login_id,list_user,list_monster,list_item_inventory,list_monster_i
     
     headers = list_monster[0]
     data = []
-    for i in range(len(list_monster)):
-        if i > 0:
-            data.append(list_monster[i])
+    for i in range(1,len(list_monster)):
+        data.append(list_monster[i])
     monster_data = [dict(custom_zip(headers, row)) for row in data]
     
     headers = list_item_inventory[0]
     data = []
-    for i in range(len(list_item_inventory)):
-        if i > 0:
-            data.append(list_item_inventory[i])
+    for i in range(1,len(list_item_inventory)):
+        data.append(list_item_inventory[i])
     potion_inventory = [dict(custom_zip(headers, row)) for row in data]
 
     headers = list_monster_inventory[0]
     data = []
-    for i in range(len(list_monster_inventory)):
-        if i > 0:
-            data.append(list_monster_inventory[i])
+    for i in range(1,len(list_monster_inventory)):
+        data.append(list_monster_inventory[i])
     monster_inventory = [dict(custom_zip(headers, row)) for row in data]
     while True:
         print(f"Halo, user_id {login_id}, jumlah OWCA Coin Anda {user_login['oc']}")
