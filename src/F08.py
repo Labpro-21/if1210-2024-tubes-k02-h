@@ -14,9 +14,8 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
 
     headers = list_user[0]
     data = []
-    for i in range(len(list_user)):
-        if i > 0:
-            data.append(list_user[i])
+    for i in range(1,len(list_user)):
+        data.append(list_user[i])
     user_data = [dict(custom_zip(headers, row)) for row in data]
     
     user_login = [u for u in user_data if u['id'] == str(login_id)]
@@ -40,23 +39,20 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
     
     headers = list_monster[0]
     data = []
-    for i in range(len(list_monster)):
-        if i > 0:
-            data.append(list_monster[i])
+    for i in range(1,len(list_monster)):
+        data.append(list_monster[i])
     monster_data = [dict(custom_zip(headers, row)) for row in data]
     
     headers = list_item_inventory[0]
     data = []
-    for i in range(len(list_item_inventory)):
-        if i > 0:
-            data.append(list_item_inventory[i])
+    for i in range(1,len(list_item_inventory)):
+        data.append(list_item_inventory[i])
     potion_inventory = [dict(custom_zip(headers, row)) for row in data]
 
     headers = list_monster_inventory[0]
     data = []
-    for i in range(len(list_monster_inventory)):
-        if i > 0:
-            data.append(list_monster_inventory[i])
+    for i in range(1,len(list_monster_inventory)):
+        data.append(list_monster_inventory[i])
     monster_inventory = [dict(custom_zip(headers, row)) for row in data]
 
     mns = []
@@ -90,8 +86,13 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
     print("\nMonster Anda:")
     for idx, user_monster in enumerate(user_monsters):
         print(f"{idx + 1}. Name: {user_monster['type']} | ATK Power: {user_monster['atk_power']} | DEF Power: {user_monster['def_power']} | HP: {user_monster['hp']} | Level: {user_monster['level']}")
+    while True:
+        user_choice = input("\nPilih monster untuk dipertarungkan: ")
+        if custom_isdigit(user_choice):
+            user_choice = int(user_choice) - 1
+            if len(user_monsters) - 1 >= user_choice:
+                break
     
-    user_choice = int(input("\nPilih monster untuk dipertarungkan: ")) - 1
     selected_user_monster = user_monsters[user_choice]
     print("\nAnda memilih:")
     print("Nama: ", selected_user_monster['type'])
@@ -114,9 +115,9 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
         sleep(1)
         print("\nGiliran Anda menyerang monster lawan!")
         sleep(1)
-        action = input("Pilih aksi Anda - Attack, Potion, Quit: ")
+        action = input("Pilih aksi Anda - Attack, Potion, Quit: ").lower()
 
-        if action.lower() == 'attack':
+        if action == 'attack':
             selected_user_monster,opponent_monster = attack(selected_user_monster, opponent_monster)
             print(f"{selected_user_monster['type']} menyerang monster {opponent_monster['type']}. HYAH!")
             sleep(1)
@@ -128,7 +129,7 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
             sleep(1)
             if opponent_monster['hp'] <= 0:
                 break
-        elif action.lower() == 'potion':
+        elif action == 'potion':
             print("\nPotion Tersedia:")
             user_potions = [potion for potion in potion_inventory if potion['user_id'] == login_id]
             if not user_potions:
@@ -136,7 +137,12 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
                 continue
             for idx, user_potion in enumerate(user_potions):
                 print(f"{idx + 1}. {user_potion['type']} - Quantity: {user_potion['quantity']}")
-            potion_choice = int(input("\nPilih potion yang akan digunakan: ")) - 1
+            while True:
+                potion_choice = input("\nPilih potion yang akan digunakan: ")
+                if custom_isdigit(potion_choice):
+                    potion_choice = int(potion_choice) - 1
+                    if potion_choice <= len(user_potions) - 1:
+                        break
             selected_potion = user_potions[potion_choice]['type']
 
             if selected_potion == 'strength' and not is_strength_used:
@@ -158,9 +164,11 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
             print("Level: ", selected_user_monster['level'])
             sleep(1)
             continue
-        else:
+        elif action == 'quit':
             user_quit = True
             break
+        else:
+            continue
         if not user_quit:        
             print(f"Sekarang giliran monster {opponent_monster['type']} melawan monstermu! HYAH!")
             opponent_monster,selected_user_monster = attack(opponent_monster, selected_user_monster)
