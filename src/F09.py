@@ -210,11 +210,11 @@ def arena(login_id,list_user,list_monster,list_item_inventory,list_monster_inven
     else:
         print("Yah, monster Anda kalah putaran pertama. Semangat, pasti bisa!")
 
-    print("---------- STATS ----------")
+    print("\n---------- STATS ----------")
     print(f"Jumlah stage lolos: {stage}")
     print(f"Total hadiah koin: {oc_coin} OC")
     print(f"Serangan diberikan: {attacks}") # Serangan bersih user terhadap lawan
-    print(f"Serngan diterima: {defends}") # Serangan bersih lawan terhadap user
+    print(f"Serangan diterima: {defends}") # Serangan bersih lawan terhadap user
     
     for user in user_data:
         if user['id'] == login_id:
