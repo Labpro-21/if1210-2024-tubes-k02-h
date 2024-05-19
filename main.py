@@ -6,7 +6,9 @@ from src.F07 import inventory
 from src.F08 import battle
 from src.F09 import arena
 from src.F10 import shop
+from src.F11 import laboratory
 from src.F12 import shop_management
+from src.F13 import monster_management
 from src.F14 import load
 from src.F15 import save
 from src.F16 import exit_game
@@ -22,6 +24,8 @@ while True:
     login_id = str(login(li_user))
   elif a == 'logout':
     login_id = logout(login_id)
+  elif a == 'help':
+    help(login_id,li_user)
   elif a == 'inventory':
     inventory(login_id,li_user,li_monster,li_item_inventory,li_monster_inventory)
   elif a == 'battle':
@@ -30,9 +34,15 @@ while True:
     li_user,li_monster,li_item_inventory,li_monster_inventory = arena(login_id,li_user,li_monster,li_item_inventory,li_monster_inventory)
   elif a == 'shop':
     li_user,li_monster,li_item_inventory,li_monster_inventory,li_item_shop,li_monster_shop = shop(login_id,li_user,li_monster,li_item_inventory,li_monster_inventory,li_item_shop,li_monster_shop)
+  elif a == 'lab':
+    li_user,li_monster_inventory = laboratory(login_id,li_user,li_monster,li_monster_inventory)
+  elif a == 'shop_mgmt':
+    li_monster, li_monster_shop, li_item_shop = shop_management(li_monster, li_item, li_monster_shop, li_item_shop)
+  elif a =='monster_mgmt':
+    li_monster = monster_management(li_monster)
   elif a == 'save':
     save(li_user, li_monster, li_item_inventory, li_monster_inventory, li_item_shop, li_monster_shop)
-  elif a == 'quit':
+  elif a == 'quit' or a == 'exit':
     exit_game(li_user, li_monster, li_item_inventory, li_monster_inventory, li_item_shop, li_monster_shop)
   else:
     continue
