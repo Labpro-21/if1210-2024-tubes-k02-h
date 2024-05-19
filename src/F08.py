@@ -131,6 +131,9 @@ def battle(login_id,list_user,list_monster,list_item_inventory,list_monster_inve
         elif action.lower() == 'potion':
             print("\nPotion Tersedia:")
             user_potions = [potion for potion in potion_inventory if potion['user_id'] == login_id]
+            if not user_potions:
+                print("Anda tidak mempunyai potion apapun")
+                continue
             for idx, user_potion in enumerate(user_potions):
                 print(f"{idx + 1}. {user_potion['type']} - Quantity: {user_potion['quantity']}")
             potion_choice = int(input("\nPilih potion yang akan digunakan: ")) - 1
