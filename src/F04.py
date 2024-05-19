@@ -4,9 +4,8 @@ def help(login_id,list_user):
 
     headers = list_user[0]
     data = []
-    for i in range(len(list_user)):
-        if i > 0:
-            data.append(list_user[i])
+    for i in range(1,len(list_user)):
+        data.append(list_user[i])
     user_data = [dict(custom_zip(headers, row)) for row in data]
     user_data = [u for u in user_data if u['id'] == str(login_id)] # Filter username yang terlogin
     
