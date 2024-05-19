@@ -1,21 +1,6 @@
-def custom_zip(*args):
-    def zipper(**attr):
-        return attr
-    iterators = [iter(iterable) for iterable in args]
-    sentinel = zipper()
-    
-    while True:
-        result = tuple(next(iterator, sentinel) for iterator in iterators)
-        if any(val is sentinel for val in result):
-            return
-        yield result
-
-def custom_isdigit(s):
-    if isinstance(s, int):
-        return True
-    return all('0' <= char <= '9' for char in str(s))
-
 def shop(login_id,list_user,list_monster,list_item_inventory,list_monster_inventory,list_item_shop,list_monster_shop):
+    from src.F05 import custom_zip
+    from src.F05 import custom_isdigit
     list_user = [[str(item) for item in row] for row in list_user]
     list_monster = [[str(item) for item in row] for row in list_monster]
     list_item_inventory = [[str(item) for item in row] for row in list_item_inventory]
