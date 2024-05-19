@@ -1,7 +1,9 @@
 def login(list_user):
     username = input("Masukkan username: ")
-    for i in range (1, len (list_user)):
+    user_found = False
+    for i in range (0, len(list_user) - 1):
         if username == list_user[i][1]:
+            user_found = True
             password = input("Masukkan password: ")
             if password == list_user[i][2]:
                 print(f"Selamat datang {list_user[i][3]} {list_user[i][1]}")
@@ -11,8 +13,10 @@ def login(list_user):
                 print("Password salah")
                 break
         else:
-            print("Username tidak terdaftar")
-            break
+            continue
+    if not user_found:
+        print("Username tidak ditemukan")
+
 
 # Aplikasi pada main.py
 
