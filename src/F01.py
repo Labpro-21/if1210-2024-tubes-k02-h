@@ -11,24 +11,21 @@ def register(list_user,list_monster,list_monster_inventory):
 
     headers = list_user[0]
     data = []
-    for i in range(len(list_user)):
-        if i > 0:
-            data.append(list_user[i])
+    for i in range(1,len(list_user)):
+        data.append(list_user[i])
     user_data = [dict(custom_zip(headers, row)) for row in data]
     
     
     headers = list_monster[0]
     data = []
-    for i in range(len(list_monster)):
-        if i > 0:
-            data.append(list_monster[i])
+    for i in range(1,len(list_monster)):
+        data.append(list_monster[i])
     monster_data = [dict(custom_zip(headers, row)) for row in data]
 
     headers = list_monster_inventory[0]
     data = []
-    for i in range(len(list_monster_inventory)):
-        if i > 0:
-            data.append(list_monster_inventory[i])
+    for i in range(1,len(list_monster_inventory)):
+        data.append(list_monster_inventory[i])
     monster_inventory = [dict(custom_zip(headers, row)) for row in data]
 
     new_user_id = 1
