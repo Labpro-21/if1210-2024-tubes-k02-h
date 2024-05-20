@@ -5,11 +5,11 @@
 > Program Game Fungsional Monster
 
 # Contributors
-Jovandra Otniel P. S. 19623032<br />
-Muhammad Iqbal Haidar 19623242<br />
-Teresa Dillen Tshia 16523142<br />
-Muthia Nabilla Azzahra 16523012<br />
-Syauqi Muhammad Fatih 16523272
+Jovandra Otniel P. S. (19623032)<br />
+Muhammad Iqbal Haidar (19623242)<br />
+Teresa Dillen Tshia (16523142)<br />
+Muthia Nabilla Azzahra (16523012)<br />
+Syauqi Muhammad Fatih (16523272)
 
 # Features
 Register: Menambah akun baru<br />
