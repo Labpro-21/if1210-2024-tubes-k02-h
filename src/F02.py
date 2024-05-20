@@ -1,9 +1,9 @@
 def login(login_id,list_user):
-    username = input("Masukkan username: ")
-    user_found = False
     if login_id:
         print("Anda sudah login")
         return login_id
+    username = input("Masukkan username: ")
+    user_found = False
     for i in range (0, len(list_user) - 1):
         if username == list_user[i][1]:
             user_found = True
