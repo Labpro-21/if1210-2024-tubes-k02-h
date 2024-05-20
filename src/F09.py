@@ -32,7 +32,7 @@ def arena(login_id,list_user,list_monster,list_item_inventory,list_monster_inven
         return list_user,list_monster,list_item_inventory,list_monster_inventory
     role = str(user_login['role']).lower()
     if role != 'agent':
-        print("Yah, hanya agent saja yang boleh masuk Battle.")
+        print("Yah, hanya agent saja yang boleh masuk Arena.")
         list_user = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_user]
         list_monster = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_monster]
         list_item_inventory = [[int(item) if custom_isdigit(item) else item for item in row] for row in list_item_inventory]
