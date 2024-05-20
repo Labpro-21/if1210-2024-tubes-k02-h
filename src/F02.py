@@ -4,7 +4,7 @@ def login(login_id,list_user):
         return login_id
     username = input("Masukkan username: ")
     user_found = False
-    for i in range (0, len(list_user) - 1):
+    for i in range (0, len(list_user)):
         if username == list_user[i][1]:
             user_found = True
             password = input("Masukkan password: ")
