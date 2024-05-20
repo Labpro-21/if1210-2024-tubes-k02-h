@@ -13,6 +13,7 @@ def help(login_id,list_user):
         print("Kamu belum login sebagai role apapun. Silahkan login terlebih dahulu.\n")
         print("Login: Masuk ke dalam akun yang sudah terdaftar\n")
         print("Register: Membuat akun baru\n")
+        print("Quit: Keluar dari game\n")
         print("\nFootnote:")
         print("Untuk menggunakan aplikasi, silahkan masukkan nama fungsi yang terdaftar\n")
         print("Jangan lupa untuk memasukkan input yang valid")
@@ -25,6 +26,12 @@ def help(login_id,list_user):
         print("Halo Agent Purry. Kamu memanggil command HELP. \nKamu memilih jalan yang benar, semoga kamu tidak sesat kemudian. \nBerikut adalah hal-hal yang dapat kamu lakukan sekarang:")
         print("Logout: Keluar dari akun yang sedang digunakan\n")
         print("Inventory: Melihat owca-dex yang dimiliki oleh Agent\n")
+        print("Battle: Memulai pertarungan dengan monster lain\n")
+        print("Arena: Melatih monster Agent di Arena\n")
+        print("Shop: Melihat dan membeli potion dan monster yang dijual\n")
+        print("Lab: Meningkatkan level monster Agent\n")
+        print("Save: Menyimpan data game\n")
+        print("Quit: Keluar dari game\n")
         # Add more commands or actions
         print("\nFootnote:")
         print("Untuk menggunakan aplikasi, silahkan masukkan nama fungsi yang terdaftar\n")
@@ -32,7 +39,10 @@ def help(login_id,list_user):
     elif role == 'admin':
         print("Selamat datang, Admin. Berikut adalah hal-hal yang dapat lakukan:\n")
         print("Logout: Keluar dari akun yang sedang digunakan\n")
-        print("Shop: Melakukan manajemen pada SHOP sebagai tempat jual beli peralatan Agent\n")
+        print("Shop_mgmt: Melakukan manajemen pada SHOP sebagai tempat jual beli peralatan Agent\n")
+        print("Monster_mgmt: Melakukan manajemen pada MONSTER yang tersedia di game\n")
+        print("Save: Menyimpan data game\n")
+        print("Quit: Keluar dari game\n")
         # Add more commands or actions
         print("\nFootnote:")
         print("Untuk menggunakan aplikasi, silahkan masukkan nama fungsi yang terdaftar")
