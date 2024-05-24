@@ -22,7 +22,7 @@ while True:
   if a == 'register':
     li_user,li_monster_inventory = register(li_user,li_monster,li_monster_inventory)
   elif a == 'login':
-    login_id = str(login(login_id,li_user))
+    login_id = login(login_id,li_user)
   elif a == 'logout':
     login_id = logout(login_id)
   elif a == 'help':
