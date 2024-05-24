@@ -11,14 +11,15 @@ def login(login_id,list_user):
             if password == list_user[i][2]:
                 print(f"Selamat datang {list_user[i][3]} {list_user[i][1]}")
                 user_id = list_user[i][0]
-                return user_id
+                return str(user_id)
             else:
                 print("Password salah")
-                break
+                return None
         else:
             continue
     if not user_found:
         print("Username tidak ditemukan")
+        return None
 
 
 # Aplikasi pada main.py
